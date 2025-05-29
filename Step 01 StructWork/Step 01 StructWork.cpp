@@ -74,14 +74,14 @@ void DisplayDep(struct Departament* dep) {
     cout << endl <<"Сокращенное обозначение кафедры: "<< dep->name;
     cout << endl <<"Должность: "<< dep->position;
     cout << endl <<"Фамилия и инициалы ответственного лица: "<< dep->resp_person;
-    //cout << endl << "--------------------------------------------------";
-    //for (int i = 0; i < dep->items.size(); i++) {
-    //    cout << endl << "Наименование имущества: " << dep->items[i].title;
-    //    cout << " Инвентарный номер: " << dep->items[i].inventory_number;
-    //    //cout << endl << " Дата ввода в эксплуатацию: "; dep->items[i].commissioning_date.Display();
-    //    cout << endl << " Cрок службы: " << to_string(dep->items[i].service_life);
-    //}
-    //cout << endl << "--------------------------------------------------";
+    cout << endl << "--------------------------------------------------";
+    for (int i = 0; i < dep->items.size(); i++) {
+        cout << endl << "Наименование имущества: " << dep->items[i].title;
+        cout << " Инвентарный номер: " << dep->items[i].inventory_number;
+        cout << endl << " Дата ввода в эксплуатацию: "; dep->items[i].commissioning_date.Display();
+        cout << endl << " Cрок службы: " << to_string(dep->items[i].service_life);
+    }
+    cout << endl << "--------------------------------------------------";
 };
 
 
