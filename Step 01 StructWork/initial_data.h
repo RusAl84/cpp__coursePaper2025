@@ -11,7 +11,7 @@ struct Item {
     int id_dep;    // id для связи в файлах
 };
 
-struct Departament {
+struct DepartamentStruct {
     string inst;     // ИКБ -  Сокращенное обозначение института 
     string name;  // КБ-2 - сокращенное обозначение кафедры  
     string position;  // ассистент - должность
