@@ -2,52 +2,10 @@
 #include <string>
 #include <vector>
 #include <Windows.h>
-
+#include "initial_data.h"
 using namespace std;
 
-class Date {
-public:
-    int day;
-    int month;
-    int year;
-    void Display() {
-        cout << day << "." << month << "." << year;
-    }
-    Date() = default;
-    Date(int day, int month, int year)
-        : day(day), month(month), year(year)
-    {
-    }
-    void setDate(int _day, int _month, int _year)
-    {
-        day = _day;
-        month = _month;
-        year = _year;
-    }
-};
-
-struct Item {
-    string title;  // Дрель - наименование имущества, 
-    string inventory_number; // 434006913 -  инвентарный номер, 
-    class Date commissioning_date; // 17.02.2025 - дата ввода в эксплуатацию, 
-    int service_life; // 24  - срок службы,
-    int id_dep;    // id для связи в файлах
-};
-
-struct Departament {
-    string inst;     // ИКБ -  Сокращенное обозначение института 
-    string name;  // КБ-2 - сокращенное обозначение кафедры  
-    string position;  // ассистент - должность
-    string resp_person; // Брежнева Е.Д. - фамилия и инициалы ответственного лица .
-    vector <Item> items;  // список элементов
-    int id_dep;    // id для связи в файлах
-};
-
-
-
-
-
-struct Departament * setDefaulDep() {
+struct Departament * setDefaultDep() {
     struct Departament* dep = new Departament();
     dep->inst = "ИКБ";
     dep->name = "КБ-2";
@@ -91,9 +49,7 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     cout << "Step 01 StructWork\n";
-    struct Departament* dep = setDefaulDep();
+    struct Departament* dep = setDefaultDep();
     DisplayDep(dep);
-
-
 }
 

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e4bb3d50-cb51-471f-9e65-90192feff43b}</ProjectGuid>
-    <RootNamespace>Step01StructWork</RootNamespace>
+    <ProjectGuid>{831e13b3-38fd-4217-9b52-9c64bbf9023c}</ProjectGuid>
+    <RootNamespace>Step02ListWork</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,11 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Step 01 StructWork.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Date.h" />
-    <ClInclude Include="initial_data.h" />
+    <ClCompile Include="Step 02 ListWork.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
