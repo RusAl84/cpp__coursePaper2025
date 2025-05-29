@@ -10,12 +10,11 @@ struct node {
     struct node* next;
 };
 
-class DepartamentList	// класс "линейный односвязный список
+class DepartamentList
 {
 public:
     struct node* myHead;
     int countItem = 0;
-
     void addItem(struct Departament* data)
     {
         struct node* newItem = new node();
@@ -121,4 +120,6 @@ int main()
     cout << endl << endl;
     dep->DisplayDep();
 
+    DepartamentList *depList = new  DepartamentList();
+    depList->addItem()
 }
