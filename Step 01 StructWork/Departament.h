@@ -18,7 +18,7 @@ public:
         dp->name = "КБ-2";
         dp->position = "ассистент";
         dp->resp_person = "Брежнева Е.Д.";
-        dp->id_dep = -1;
+        //dp->id_dep = -1;
         struct Item* item = new Item();
         item->title = "Дрель";
         item->inventory_number = "434006913";

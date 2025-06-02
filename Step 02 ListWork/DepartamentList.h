@@ -103,7 +103,7 @@ public:
         class Departament* dp = new Departament();
         dp->setDefaultDep();
         dp->data->resp_person = "Сорокина П.А.";
-        dp->data->id_dep = 1;
+        //dp->data->id_dep = 1;
         dp->data->name = "КБ-1";
         struct Item* item = new Item();
         item->title = "Стул";
@@ -113,7 +113,7 @@ public:
         dp->data->items.push_back(*item);
         addItem(dp);
         dp = new Departament();
-        dp->data->id_dep = 2;
+        //dp->data->id_dep = 2;
         dp->data->name = "КБ-2";
         dp->data->resp_person = "Брежнева А.Е.";
         item->title = "Пассатижи";
@@ -123,7 +123,7 @@ public:
         dp->data->items.push_back(*item);
         addItem(dp);
         dp = new Departament();
-        dp->data->id_dep = 3;
+        //dp->data->id_dep = 3;
         dp->data->name = "КБ-3";
         dp->data->resp_person = "Филатов В.В.";
         item->title = "Шило";
@@ -133,7 +133,7 @@ public:
         dp->data->items.push_back(*item);
         addItem(dp);
         dp = new Departament();
-        dp->data->id_dep = 4;
+        //dp->data->id_dep = 4;
         dp->data->name = "КБ-4";
         dp->data->resp_person = "Русаков А.М.";
         item->title = "Отвертка";
@@ -143,7 +143,7 @@ public:
         dp->data->items.push_back(*item);
         addItem(dp);
         dp = new Departament();
-        dp->data->id_dep = 5;
+        //dp->data->id_dep = 5;
         dp->data->name = "КБ-5";
         dp->data->resp_person = "Харченко И.Г.";
         item->title = "Маркерная доска";

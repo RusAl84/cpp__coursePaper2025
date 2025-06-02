@@ -8,7 +8,7 @@ struct Item {
     string inventory_number; // 434006913 -  инвентарный номер, 
     class Date commissioning_date; // 17.02.2025 - дата ввода в эксплуатацию, 
     int service_life; // 24  - срок службы,
-    int id_dep;    // id для связи в файлах
+    //int id_dep;    // id для связи в файлах
 };
 
 struct DepartamentStruct {
@@ -17,5 +17,5 @@ struct DepartamentStruct {
     string position;  // ассистент - должность
     string resp_person; // Брежнева Е.Д. - фамилия и инициалы ответственного лица .
     vector <Item> items;  // список элементов
-    int id_dep;    // id для связи в файлах
+    //int id_dep;    // id для связи в файлах
 };
