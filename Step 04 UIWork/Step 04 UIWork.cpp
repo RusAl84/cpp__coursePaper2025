@@ -137,7 +137,6 @@ void mainMenu(DepartamentList* depList) {
 }
 
 
-
 int main()
 {
 	setlocale(LC_ALL, "Russian");
