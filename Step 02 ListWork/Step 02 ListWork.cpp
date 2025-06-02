@@ -6,7 +6,7 @@
 using namespace std;
 
 struct node {
-    struct Departament* data;
+    class Departament* data;
     struct node* next;
 };
 
@@ -15,7 +15,7 @@ class DepartamentList
 public:
     struct node* myHead;
     int countItem = 0;
-    void addItem(struct Departament* data)
+    void addItem(class Departament* data)
     {
         struct node* newItem = new node();
         newItem->data = data;
@@ -26,7 +26,7 @@ public:
         myHead = newItem;
         countItem++;
     }
-    void insertItem(int index, struct Departament* data) {
+    void insertItem(int index, class Departament* data) {
         if (not (index >= 0 and index <= countItem and countItem >= 0))
             return;
         if (index == 0)
@@ -43,7 +43,7 @@ public:
             countItem++;
         }
     }
-    void editItem(int index, struct Departament* data) {
+    void editItem(int index, class Departament* data) {
         if (index >= 0 and index < countItem and countItem>0) {
             struct node* current = myHead;
             for (int i = 0; i < index; i++) {
@@ -87,7 +87,7 @@ public:
         struct node* current = myHead;
         cout << endl;
         while (current) {
-            cout << current->data->dep->resp_person << endl;
+            cout << current->data->data->resp_person << endl;
             current = current->next;
         }
     }
@@ -99,6 +99,37 @@ public:
             current = current->next;
         }
     }
+
+    void genData() {
+        class Departament* dp = new Departament();
+        //dep->DisplayDep();
+        dp->data->resp_person = "Сорокина П.А.";
+        dp->data->id_dep = 1;
+        dp->data->name = "КБ-1";
+        struct Item* item = new Item();
+        item->title = "Стул";
+        item->inventory_number = "434006916";
+        item->commissioning_date.setDate(28, 05, 2025);
+        item->service_life = 24;
+        dp->data->items.push_back(*item);
+        addItem(dp);
+        dp->setDefaultDep();
+        dp->data->id_dep = 2;
+        dp->data->name = "КБ-2";
+        dp->data->resp_person = "Брежнева А.Е.";
+        item->title = "Пассатижи";
+        item->inventory_number = "434006917";
+        item->commissioning_date.setDate(28, 05, 2025);
+        item->service_life = 12;
+        dp->data->items.push_back(*item);
+        addItem(dp);
+
+        //cout << endl << endl;
+        //dep->DisplayDep();
+
+    }
+
+
 };
 
 
@@ -108,18 +139,9 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     cout << "Step 02 ListWork\n";
-    class Departament* dep = new Departament();
-    dep->DisplayDep();
-    dep->dep->resp_person = "Сорокина П.А.";
-    struct Item* item = new Item();
-    item->title = "Стул";
-    item->inventory_number = "434006916";
-    item->commissioning_date.setDate(28, 05, 2025);
-    item->service_life = 24;
-    dep->dep->items.push_back(*item);
-    cout << endl << endl;
-    dep->DisplayDep();
+
 
     DepartamentList *depList = new  DepartamentList();
-    depList->addItem()
+    depList->genData();
+    depList->Dislay();
 }

@@ -14,13 +14,13 @@ int main()
     cout << "Step 01 StructWork\n";
     class Departament* dep = new Departament();
     dep->DisplayDep();
-    dep->dep->resp_person = "Сорокина П.А.";
+    dep->data->resp_person = "Сорокина П.А.";
     struct Item* item = new Item();
     item->title = "Стул";
     item->inventory_number = "434006916";
     item->commissioning_date.setDate(28, 05, 2025);
     item->service_life = 24;
-    dep->dep->items.push_back(*item);
+    dep->data->items.push_back(*item);
     dep->DisplayDep();
    
 }

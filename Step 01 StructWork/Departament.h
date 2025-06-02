@@ -9,47 +9,47 @@ using namespace std;
 class Departament
 {
 public:
-    struct DepartamentStruct* dep;
+    struct DepartamentStruct* data;
 
-    struct DepartamentStruct* setDefaultDep() {
-        struct DepartamentStruct* dep = new DepartamentStruct();
-        dep->inst = "ИКБ";
-        dep->name = "КБ-2";
-        dep->position = "ассистент";
-        dep->resp_person = "Брежнева Е.Д.";
-        dep->id_dep = -1;
+    void setDefaultDep() {
+        struct DepartamentStruct* dp = new DepartamentStruct();
+        dp->inst = "ИКБ";
+        dp->name = "КБ-2";
+        dp->position = "ассистент";
+        dp->resp_person = "Брежнева Е.Д.";
+        dp->id_dep = -1;
         struct Item* item = new Item();
         item->title = "Дрель";
         item->inventory_number = "434006913";
         item->commissioning_date.setDate(28, 05, 2025);
         item->service_life = 36;
-        dep->items.push_back(*item);
+        dp->items.push_back(*item);
         item->title = "Молоток";
         item->inventory_number = "434006914";
-        dep->items.push_back(*item);
+        dp->items.push_back(*item);
         item->title = "Стол";
         item->inventory_number = "434006915";
-        dep->items.push_back(*item);
-        return dep;
+        dp->items.push_back(*item);
+        this->data = dp;
     };
 
     void DisplayDep() {
-        cout << endl << "Сокращенное обозначение института: " << dep->inst;
-        cout << endl << "Сокращенное обозначение кафедры: " << dep->name;
-        cout << endl << "Должность: " << dep->position;
-        cout << endl << "Фамилия и инициалы ответственного лица: " << dep->resp_person;
+        cout << endl << "Сокращенное обозначение института: " << data->inst;
+        cout << endl << "Сокращенное обозначение кафедры: " << data->name;
+        cout << endl << "Должность: " << data->position;
+        cout << endl << "Фамилия и инициалы ответственного лица: " << data->resp_person;
         cout << endl << "--------------------------------------------------";
-        for (int i = 0; i < dep->items.size(); i++) {
-            cout << endl << "Наименование имущества: " << dep->items[i].title;
-            cout << " Инвентарный номер: " << dep->items[i].inventory_number;
-            cout << endl << " Дата ввода в эксплуатацию: "; dep->items[i].commissioning_date.Display();
-            cout << endl << " Cрок службы: " << to_string(dep->items[i].service_life);
+        for (int i = 0; i < data->items.size(); i++) {
+            cout << endl << "Наименование имущества: " << data->items[i].title;
+            cout << " Инвентарный номер: " << data->items[i].inventory_number;
+            cout << endl << " Дата ввода в эксплуатацию: "; data->items[i].commissioning_date.Display();
+            cout << endl << " Cрок службы: " << to_string(data->items[i].service_life);
         }
         cout << endl << "--------------------------------------------------";
     };
 
     Departament() {
-        dep=setDefaultDep();
+        setDefaultDep();
     };
 
 };
