@@ -1,12 +1,10 @@
 ﻿#include <iostream>
-
 #include <string>
 #include <vector>
 #include <Windows.h>
 #include "FileWork.h"
 #include "..//Step 01 StructWork/Departament.h"
 #include "..//Step 02 ListWork/DepartamentList.h"
-
 
 
 int main()
@@ -26,4 +24,3 @@ int main()
     cout << endl << endl << endl << "depList_new";
     depList_new->Dislay();
 }
-
