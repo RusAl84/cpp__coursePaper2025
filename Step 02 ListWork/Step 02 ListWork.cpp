@@ -102,7 +102,7 @@ public:
 
     void genData() {
         class Departament* dp = new Departament();
-        //dep->DisplayDep();
+        dp->setDefaultDep();
         dp->data->resp_person = "Сорокина П.А.";
         dp->data->id_dep = 1;
         dp->data->name = "КБ-1";
@@ -113,7 +113,7 @@ public:
         item->service_life = 24;
         dp->data->items.push_back(*item);
         addItem(dp);
-        dp->setDefaultDep();
+        dp = new Departament();
         dp->data->id_dep = 2;
         dp->data->name = "КБ-2";
         dp->data->resp_person = "Брежнева А.Е.";
@@ -123,13 +123,37 @@ public:
         item->service_life = 12;
         dp->data->items.push_back(*item);
         addItem(dp);
-
-        //cout << endl << endl;
-        //dep->DisplayDep();
-
+        dp = new Departament();
+        dp->data->id_dep = 3;
+        dp->data->name = "КБ-3";
+        dp->data->resp_person = "Филатов В.В.";
+        item->title = "Шило";
+        item->inventory_number = "434006918";
+        item->commissioning_date.setDate(28, 05, 2025);
+        item->service_life = 12;
+        dp->data->items.push_back(*item);
+        addItem(dp);
+        dp = new Departament();
+        dp->data->id_dep = 4;
+        dp->data->name = "КБ-4";
+        dp->data->resp_person = "Русаков А.М.";
+        item->title = "Отвертка";
+        item->inventory_number = "434006919";
+        item->commissioning_date.setDate(28, 05, 2025);
+        item->service_life = 12;
+        dp->data->items.push_back(*item);
+        addItem(dp);
+        dp = new Departament();
+        dp->data->id_dep = 5;
+        dp->data->name = "КБ-5";
+        dp->data->resp_person = "Харченко И.Г.";
+        item->title = "Маркерная доска";
+        item->inventory_number = "434006920";
+        item->commissioning_date.setDate(28, 05, 2025);
+        item->service_life = 36;
+        dp->data->items.push_back(*item);
+        addItem(dp);
     }
-
-
 };
 
 
@@ -139,8 +163,6 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     cout << "Step 02 ListWork\n";
-
-
     DepartamentList *depList = new  DepartamentList();
     depList->genData();
     depList->Dislay();

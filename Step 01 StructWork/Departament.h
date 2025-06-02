@@ -12,6 +12,7 @@ public:
     struct DepartamentStruct* data;
 
     void setDefaultDep() {
+        this->data = nullptr;
         struct DepartamentStruct* dp = new DepartamentStruct();
         dp->inst = "ศสม";
         dp->name = "สม-2";
