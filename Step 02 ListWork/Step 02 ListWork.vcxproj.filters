@@ -23,5 +23,8 @@
     <ClInclude Include="..\Step 01 StructWork\Departament.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="DepartamentList.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
