@@ -22,7 +22,7 @@ public:
             newItem->next = NULL;
         else
             newItem->next = myHead;
-        myHead = newItem;
+        myHead = newItem; //Добавляет в начало
         countItem++;
     }
     void insertItem(int index, class Departament* data) {

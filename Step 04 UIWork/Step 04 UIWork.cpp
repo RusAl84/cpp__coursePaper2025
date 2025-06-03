@@ -9,6 +9,21 @@
 #include "..//UI ClassMenu/ClassMenu.h"
 #include "..//Step 06 CryptoWork/ClassCrypt.h"
 
+void EditInv(struct node* current) {
+	_getch();
+	current->data->DisplayDep();
+	_getch();
+}
+
+void addInv(DepartamentList* depList) {
+	class Departament* data = new Departament();
+	data->setDefaultDep();
+	depList->addItem(data);
+	struct node* current = depList->myHead;
+	EditInv(current);
+}
+
+
 void mainMenu(DepartamentList* depList) {
 	ClassMenu* mainMenu = new ClassMenu();
 	mainMenu->addTitleItem("Главное меню");
@@ -90,7 +105,7 @@ void mainMenu(DepartamentList* depList) {
 			//resultSelectedItem = exitInt;
 			break;
 		case 1: //Добавить данные о имущества
-			//addDep();
+			addInv(depList);
 			resultSelectedItem = 0;
 			break;
 		case 2: //Загрузить БД из файла  
@@ -137,6 +152,8 @@ void mainMenu(DepartamentList* depList) {
 }
 
 
+
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -149,7 +166,5 @@ int main()
     //cout << endl << endl << endl << "depList_new";
     //depList->Dislay();
 	mainMenu(depList);
-
-
 
 }
