@@ -285,6 +285,6 @@ int main()
     fWork->loadData(depList);
     //cout << endl << endl << endl << "depList_new";
     //depList->Dislay();
-	//mainMenu(depList);
-	addInv(depList);
+	mainMenu(depList);
+	//addInv(depList);
 }
