@@ -2,12 +2,13 @@
 #include <string>
 #include <vector>
 #include <Windows.h>
-#include "..//Step 03 FileWork/FileWork.h"
 #include "..//Step 01 StructWork/Departament.h"
 #include "..//Step 02 ListWork/DepartamentList.h"
+#include "..//Step 03 FileWork/FileWork.h"
 #include "..//UI ClassMenu/ClassEdit.h"
 #include "..//UI ClassMenu/ClassMenu.h"
 #include "..//Step 06 CryptoWork/ClassCrypt.h"
+//#include "..//Step 01 StructWork/Date.h"
 
 
 void editItems(struct node* current) {
@@ -270,8 +271,6 @@ void mainMenu(DepartamentList* depList) {
 	}
 	//_getch();
 }
-
-
 
 
 int main()

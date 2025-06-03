@@ -12,6 +12,9 @@ public:
     void Display() {
         cout << day << "." << month << "." << year;
     }
+    string getStringDate() {
+        return string(to_string(day) + "." + to_string(month) + "." + to_string(year));
+    }
     Date() = default;
     Date(int day, int month, int year)
         : day(day), month(month), year(year)
