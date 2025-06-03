@@ -3,8 +3,6 @@
 #include <vector>
 #include <Windows.h>
 #include "FileWork.h"
-#include "..//Step 01 StructWork/Departament.h"
-#include "..//Step 02 ListWork/DepartamentList.h"
 
 
 int main()
@@ -19,7 +17,6 @@ int main()
     class FileWork* fWork = new FileWork();
     fWork->saveData(depList->myHead);
     DepartamentList* depList_new = new  DepartamentList();
-    
     fWork->loadData(depList_new);
     cout << endl << endl << endl << "depList_new";
     depList_new->Dislay();

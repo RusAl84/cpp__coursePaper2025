@@ -148,8 +148,8 @@ void addInv(DepartamentList* depList) {
 void mainMenu(DepartamentList* depList) {
 	ClassMenu* mainMenu = new ClassMenu();
 	mainMenu->addTitleItem("Главное меню");
-	mainMenu->addItem("Просмотреть список имущества"); //0
-	mainMenu->addItem("Добавить данные о имущества"); //1
+	mainMenu->addItem("Просмотреть список кафедр"); //0
+	mainMenu->addItem("Добавить данные о кафедрах"); //1
 	mainMenu->addItem("Загрузить БД из файла"); //2
 	mainMenu->addItem("Сохранить БД в файл"); //3
 	mainMenu->addItem("Зашифровать БД"); //4
@@ -164,7 +164,7 @@ void mainMenu(DepartamentList* depList) {
 	int countItem = 0;
 	int resultInvSelectedItem = 1;
 	const int exitInvtMenu = 0;
-	invMenu->addTitleItem("Список имущества:");
+	invMenu->addTitleItem("Список кафедр:");
 	class FileWork* fWork = new FileWork();
 	ClassCrypt* pCrypt = new ClassCrypt();
 	ClassMenu* delMenu = new ClassMenu();
@@ -181,16 +181,15 @@ void mainMenu(DepartamentList* depList) {
 			while (resultInvSelectedItem != exitInvtMenu) {
 				invMenu->eraseItem();
 				invMenu->addItem("Выход");
-				invMenu->addItem("Удалить данные о имуществе");
+				invMenu->addItem("Удалить данные о кафедре");
 				struct node* current = depList->myHead;
 				while (current) {
-					string tmpString = string(current->data->data->name)+ " " + string(current->data->data->resp_person);
-					invMenu->addItem(tmpString); //добавить в меню студентов
+					invMenu->addItem(current->data->getDepString()); //добавить в меню кафедру 
 					current = current->next;
 				}
 				invMenu->run();
 				resultInvSelectedItem = invMenu->getSelectedItem();
-				if (resultInvSelectedItem == 1) //удаление данных о студенте
+				if (resultInvSelectedItem == 1) //удаление данных
 				{
 					delMenu->eraseAll();
 					delMenu->addTitleItem("Выберите имущество для удаления данных");
@@ -199,8 +198,7 @@ void mainMenu(DepartamentList* depList) {
 					const int exitDel = 0;
 					struct node* current = depList->myHead;
 					while (current) {
-						string tmpString = string(current->data->data->name) + " " + string(current->data->data->resp_person);
-						delMenu->addItem(tmpString); //добавить в меню имущество
+						delMenu->addItem(current->data->getDepString()); //добавить в меню кафедру
 						current = current->next;
 					}
 					while (resultDel != exitDel) {

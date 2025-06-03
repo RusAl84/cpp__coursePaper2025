@@ -11,6 +11,10 @@ class Departament
 public:
     struct DepartamentStruct* data;
 
+    string getDepString() {
+        return string(data->name + " " + data->resp_person);
+    }
+
     void setDefaultDep() {
         this->data = nullptr;
         struct DepartamentStruct* dp = new DepartamentStruct();
