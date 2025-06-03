@@ -9,10 +9,130 @@
 #include "..//UI ClassMenu/ClassMenu.h"
 #include "..//Step 06 CryptoWork/ClassCrypt.h"
 
+
+void editItems(struct node* current) {
+	ClassMenu* itemsMenu = new ClassMenu();
+	int result = 1;
+	const int exit = 0;
+	ClassMenu* msMenu = new ClassMenu();
+	int resultS = 1;
+	const int exitS = 0;
+	ClassEdit* ce = new  ClassEdit();
+	itemsMenu->addItem("Выход");   //0
+	int itemsCount = current->data->data->items.size();
+	int cur = 0;
+	while (result != exit) {
+		itemsMenu->eraseTitle();
+		itemsMenu->addTitleItem("Просмотр/изменение/добавление данных имуществе");
+		itemsMenu->addTitleItem("Выберите сессию для просмотра и редактирования информации об оценках");
+		itemsMenu->run();
+		result = itemsMenu->getSelectedItem();
+		if (result == exit) {
+			result = exit;
+			break;
+		}
+		
+		cur = result;
+		if ((cur >= 1) and (cur <= itemsCount))
+		{
+			//рисуем меню и правим оценки про сессию
+			msMenu->eraseAll();
+			msMenu->addTitleItem("Просмотр/изменение/добавление данных о оценках");
+			msMenu->addTitleItem("Данные сессии №" + std::to_string(cur));
+			resultS = 1;
+			while (resultS != exitS) {
+				msMenu->eraseItem();
+				msMenu->addItem("Выход");
+				msMenu->addItem("Добавить запись");
+				msMenu->addItem("Удалить запись");
+				//for (int i = 0; i < namesCount; i++)
+				//	if (not data[cur - 1][i].isEmpty)
+				//	{
+				//		msMenu->addItem("Имущество: " markString);
+				//	}
+				msMenu->run();
+				resultS =msMenu->getSelectedItem();
+				if (resultS == 0)
+					resultS == exitS;
+				if (resultS == 1) {
+					int itemNum = msMenu->getItemsCount() - 3;
+					if (itemNum > itemsCount) {
+						system("cls");
+						cout << "Ошибка бывает только itemsCount ";
+						_getch();  //!!!!!!!!!!!!!!!????????
+						_getch();
+					}
+					else {
+						//addExamsResults(cur, itemNum);
+					}
+				}
+				if (resultS == 2) {
+					//Удалить запись
+					//delExamsResults(cur);
+				}
+				if (resultS > 2) {
+					//addExamsResults(cur, resultS - 3);
+				}
+			}
+		}
+		result = cur;
+	}
+}
+
 void EditInv(struct node* current) {
-	_getch();
-	current->data->DisplayDep();
-	_getch();
+	//_getch();
+	//current->data->DisplayDep();
+	//_getch();
+	ClassMenu* depMenu = new ClassMenu();
+	int resultdepMenu = 1;
+	const int exitdepMenu = 0;
+	ClassEdit* ce = new  ClassEdit();
+	depMenu->addItem("Выход");   //0
+	depMenu->addItem("Добавить/изменить cокращенное обозначение института"); //1
+	depMenu->addItem("Добавить/изменить cокращенное обозначение кафедры");   //2
+	depMenu->addItem("Добавить/изменить должность");   //3
+	depMenu->addItem("Добавить/изменить фамилию и инициалы ответственного лица");   //4
+	depMenu->addItem("Добавить/изменить (просмотреть) имущество");   //5
+	while (resultdepMenu != exitdepMenu) {
+		depMenu->eraseTitle();
+		depMenu->addTitleItem("Изменение/добавление данных имуществе:");
+		depMenu->addTitleItem("Сокращенное обозначение института: " + string(current->data->data->inst));
+		depMenu->addTitleItem("Сокращенное обозначение кафедры: " + string(current->data->data->name));
+		depMenu->addTitleItem("Должность: " + string(current->data->data->position)) ;
+		depMenu->addTitleItem("Фамилия и инициалы ответственного лица: " + string(current->data->data->resp_person));
+		depMenu->run();
+		resultdepMenu = depMenu->getSelectedItem();
+		string tmpString = "";
+		int year = 0;
+		int startYear = 0;
+		switch (resultdepMenu) {
+		case 0:
+			resultdepMenu = exitdepMenu;
+			break;
+		case 1:
+			ce->setLabel("Введите cокращенное обозначение института. ");
+			current->data->data->inst=ce->setDataString(current->data->data->inst);
+			break;
+		case 2:
+			ce->setLabel("Введите cокращенное обозначение кафедры. ");
+			current->data->data->name = ce->setDataString(current->data->data->name);
+			break;
+		case 3:
+			ce->setLabel("Введите должность. ");
+			current->data->data->position = ce->setDataString(current->data->data->position);
+			break;
+		case 4:
+			ce->setLabel("Введите фамилию и инициалы ответственного лица. ");
+			current->data->data->resp_person = ce->setDataString(current->data->data->resp_person);
+			break;
+		case 5:
+			ce->setLabel("Просмотреть/ изменить имущество");
+			editItems(current);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void addInv(DepartamentList* depList) {
@@ -165,6 +285,6 @@ int main()
     fWork->loadData(depList);
     //cout << endl << endl << endl << "depList_new";
     //depList->Dislay();
-	mainMenu(depList);
-
+	//mainMenu(depList);
+	addInv(depList);
 }
