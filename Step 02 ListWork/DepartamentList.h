@@ -55,6 +55,18 @@ public:
             cout << endl << "Ошибка индекс не в диапазоне";
         }
     }
+    struct node* getItem(int index) {
+        if (index >= 0 and index < countItem and countItem>0) {
+            struct node* current = myHead;
+            for (int i = 0; i < index; i++) {
+                current = current->next;
+            }
+            return current;
+        }
+        else {
+            cout << endl << "Ошибка индекс не в диапазоне";
+        }
+    }
     void deleteItem(int index) {
         if (index >= 0 and index < countItem and countItem>0) {
             struct node* current = myHead;

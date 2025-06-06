@@ -144,12 +144,98 @@ void addInv(DepartamentList* depList) {
 	EditInv(current);
 }
 
+void  depEdit(DepartamentList* depList, int num) {
+	ClassMenu* depMenu = new ClassMenu();  // Меню редактирования данных о подразделении
+	int countItem = 0;
+	int resultDpsSelectedItem = 1;
+	const int exitInt = 0;
+	depMenu->addTitleItem("Редактирования данных о подразделении:");
+	ClassEdit* ce = new  ClassEdit();
+
+	struct node* current = depList->getItem(num);
+	while (resultDpsSelectedItem != exitInt)
+	{
+		depMenu->eraseAll();
+		depMenu->addTitleItem("Редактирования данных о подразделении: ");
+		depMenu->addTitleItem(" Сокращенное обозначение института: " + current->data->data->inst);
+		depMenu->addTitleItem(" Сокращенное обозначение кафедры: " + current->data->data->name);
+		depMenu->addTitleItem(" Должность:" + current->data->data->position);
+		depMenu->addTitleItem(" Фамилия и инициалы ответственного лица: " + current->data->data->resp_person);
+
+		depMenu->addItem("Выход");
+		depMenu->run();
+		resultDpsSelectedItem = depMenu->getSelectedItem();
+		switch (resultDpsSelectedItem)
+		{
+		case 0:
+			resultDpsSelectedItem = 0;
+			//resultSelectedItem = exitInt;
+			break;
+
+		default:
+			break;
+		}
+	}
+}
+
+void  departamentsEdit(DepartamentList* depList) {
+	ClassMenu* departamentsMenu = new ClassMenu();  // Меню подразделений
+	int resultDpsSelectedItem = 1;
+	const int exitDpsMenu = 0;
+	departamentsMenu->addTitleItem("Список подразделений:");
+	ClassMenu* delMenu = new ClassMenu();
+	int curCount;
+	while (resultDpsSelectedItem != exitDpsMenu)
+	{
+		departamentsMenu->eraseItem();
+		departamentsMenu->addItem("Выход");
+		departamentsMenu->addItem("Удалить данные о кафедре");
+		struct node* current = depList->myHead;
+		while (current) {
+			departamentsMenu->addItem(current->data->getDepString()); //добавить в меню кафедру 
+			current = current->next;
+		}
+		departamentsMenu->run();
+		resultDpsSelectedItem = departamentsMenu->getSelectedItem();
+		if (resultDpsSelectedItem == 1) //удаление данных
+		{
+			delMenu->eraseAll();
+			delMenu->addTitleItem("Выберите подразделение для удаления");
+			delMenu->addItem("Выход");
+			int resultDel = 1;
+			const int exitDel = 0;
+			struct node* current = depList->myHead;
+			while (current) {
+				delMenu->addItem(current->data->getDepString()); //добавить в меню кафедру
+				current = current->next;
+			}
+			while (resultDel != exitDel) {
+				delMenu->run();
+				resultDel = delMenu->getSelectedItem();
+				if (resultDel == exitDel) {
+					break;
+				}
+				else {
+					int num = resultDel - 1;
+					depList->deleteItem(num);
+					break;
+				}
+			}
+		}
+		if (resultDpsSelectedItem > 1)
+		{
+			int num = resultDpsSelectedItem - 2;
+			// редактирование подразделения
+			depEdit(depList, num);
+		}
+	}
+};
 
 void mainMenu(DepartamentList* depList) {
 	ClassMenu* mainMenu = new ClassMenu();
 	mainMenu->addTitleItem("Главное меню");
-	mainMenu->addItem("Просмотреть список кафедр"); //0
-	mainMenu->addItem("Добавить данные о кафедрах"); //1
+	mainMenu->addItem("Просмотреть список подразделений"); //0
+	mainMenu->addItem("Добавить данные о подразделении"); //1
 	mainMenu->addItem("Загрузить БД из файла"); //2
 	mainMenu->addItem("Сохранить БД в файл"); //3
 	mainMenu->addItem("Зашифровать БД"); //4
@@ -159,68 +245,18 @@ void mainMenu(DepartamentList* depList) {
 	mainMenu->addItem("Выполнить вариант 29 часть 3"); //8
 	mainMenu->addItem("Выход"); //9
 	int resultSelectedItem = 0;
-	int exitInt = 4;
-	ClassMenu* invMenu = new ClassMenu();
-	int countItem = 0;
-	int resultInvSelectedItem = 1;
-	const int exitInvtMenu = 0;
-	invMenu->addTitleItem("Список кафедр:");
+	int exitInt = 9;
 	class FileWork* fWork = new FileWork();
 	ClassCrypt* pCrypt = new ClassCrypt();
-	ClassMenu* delMenu = new ClassMenu();
-	int curCount;
-	ClassEdit* ce = new  ClassEdit();
-	//int resultSessionsMenuItem = 1;
-	//const int exitIntSessionsMenuItem = 0;
-	while (resultSelectedItem != exitInt) {
+	while (resultSelectedItem != exitInt)
+	{
 		mainMenu->run();
 		resultSelectedItem = mainMenu->getSelectedItem();
-		switch (resultSelectedItem) {
+		switch (resultSelectedItem)
+		{
 		case 0:
-			resultInvSelectedItem = 1;
-			while (resultInvSelectedItem != exitInvtMenu) {
-				invMenu->eraseItem();
-				invMenu->addItem("Выход");
-				invMenu->addItem("Удалить данные о кафедре");
-				struct node* current = depList->myHead;
-				while (current) {
-					invMenu->addItem(current->data->getDepString()); //добавить в меню кафедру 
-					current = current->next;
-				}
-				invMenu->run();
-				resultInvSelectedItem = invMenu->getSelectedItem();
-				if (resultInvSelectedItem == 1) //удаление данных
-				{
-					delMenu->eraseAll();
-					delMenu->addTitleItem("Выберите имущество для удаления данных");
-					delMenu->addItem("Выход");
-					int resultDel = 1;
-					const int exitDel = 0;
-					struct node* current = depList->myHead;
-					while (current) {
-						delMenu->addItem(current->data->getDepString()); //добавить в меню кафедру
-						current = current->next;
-					}
-					while (resultDel != exitDel) {
-						delMenu->run();
-						resultDel = delMenu->getSelectedItem();
-						if (resultDel == exitDel) {
-							break;
-						}
-						else {
-							int num = resultDel - 1;
-							depList->deleteItem(num);
-							break;
-						}
-					}
-				}
-				if (resultInvSelectedItem > 1)
-				{
-					int num = resultInvSelectedItem - 2;
-					//depList->editItem(num);
-					//можно сделать проверку есть ли такая ещё 
-				}
-			}
+			departamentsEdit(depList);
+			resultSelectedItem = 0;
 			//resultSelectedItem = exitInt;
 			break;
 		case 1: //Добавить данные о имущества
@@ -229,7 +265,7 @@ void mainMenu(DepartamentList* depList) {
 			break;
 		case 2: //Загрузить БД из файла  
 			fWork->loadData(depList);
-			countItem = depList->countItem;
+			//countItem = depList->countItem;
 			resultSelectedItem = 0;
 			break;
 		case 3: //Сохранить БД в файл
@@ -268,8 +304,7 @@ void mainMenu(DepartamentList* depList) {
 		}
 	}
 	//_getch();
-}
-
+};
 
 int main()
 {
