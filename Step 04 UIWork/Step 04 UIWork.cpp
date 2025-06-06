@@ -12,146 +12,62 @@
 
 
 void editItems(struct node* current) {
-	ClassMenu* itemsMenu = new ClassMenu();
-	int result = 1;
-	const int exit = 0;
-	ClassMenu* msMenu = new ClassMenu();
-	int resultS = 1;
-	const int exitS = 0;
-	ClassEdit* ce = new  ClassEdit();
-	itemsMenu->addItem("Выход");   //0
-	int itemsCount = current->data->data->items.size();
-	int cur = 0;
-	while (result != exit) {
-		itemsMenu->eraseTitle();
-		itemsMenu->addTitleItem("Просмотр/изменение/добавление данных имуществе");
-		itemsMenu->addTitleItem("Выберите сессию для просмотра и редактирования информации об оценках");
+	ClassMenu* itemsMenu = new ClassMenu();  // Меню подразделений
+	int resultItsSelectedItem = 1;
+	const int exitDpsMenu = 0;
+	itemsMenu->addTitleItem("Список имущества:");
+	//
+	ClassMenu* delMenu = new ClassMenu();
+	int curCount;
+	while (resultItsSelectedItem != exitDpsMenu)
+	{
+		itemsMenu->eraseItem();
+		itemsMenu->addItem("Выход");
+		itemsMenu->addItem("Удалить данные имуществе");
+		for(int i=0; i< current->data->data->items.size();i++)
+			itemsMenu->addItem(current->data->data->items[i].title + "  " + current->data->data->items[i].inventory_number);
 		itemsMenu->run();
-		result = itemsMenu->getSelectedItem();
-		if (result == exit) {
-			result = exit;
-			break;
-		}
-		
-		cur = result;
-		if ((cur >= 1) and (cur <= itemsCount))
+		resultItsSelectedItem = itemsMenu->getSelectedItem();
+		if (resultItsSelectedItem == 1) //удаление данных
 		{
-			//рисуем меню и правим оценки про сессию
-			msMenu->eraseAll();
-			msMenu->addTitleItem("Просмотр/изменение/добавление данных о оценках");
-			msMenu->addTitleItem("Данные сессии №" + std::to_string(cur));
-			resultS = 1;
-			while (resultS != exitS) {
-				msMenu->eraseItem();
-				msMenu->addItem("Выход");
-				msMenu->addItem("Добавить запись");
-				msMenu->addItem("Удалить запись");
-				//for (int i = 0; i < namesCount; i++)
-				//	if (not data[cur - 1][i].isEmpty)
-				//	{
-				//		msMenu->addItem("Имущество: " markString);
-				//	}
-				msMenu->run();
-				resultS =msMenu->getSelectedItem();
-				if (resultS == 0)
-					resultS == exitS;
-				if (resultS == 1) {
-					int itemNum = msMenu->getItemsCount() - 3;
-					if (itemNum > itemsCount) {
-						system("cls");
-						cout << "Ошибка бывает только itemsCount ";
-						_getch();  //!!!!!!!!!!!!!!!????????
-						_getch();
-					}
-					else {
-						//addExamsResults(cur, itemNum);
-					}
+			delMenu->eraseAll();
+			delMenu->addTitleItem("Выберите имущество для удаления");
+			delMenu->addItem("Выход");
+			int resultDel = 1;
+			const int exitDel = 0;
+			for (int i = 0; i < current->data->data->items.size(); i++)
+				delMenu->addItem(current->data->data->items[i].title + "  " + current->data->data->items[i].inventory_number);
+			while (resultDel != exitDel) {
+				delMenu->run();
+				resultDel = delMenu->getSelectedItem();
+				if (resultDel == exitDel) {
+					break;
 				}
-				if (resultS == 2) {
-					//Удалить запись
-					//delExamsResults(cur);
-				}
-				if (resultS > 2) {
-					//addExamsResults(cur, resultS - 3);
+				else {
+					int num = resultDel - 1;
+					//depList->deleteItem(num);
+					auto iter = current->data->data->items.cbegin();  // указатель на первый элемент
+					current->data->data->items.erase(iter + num);  // удаляем  элемент
+					break;
 				}
 			}
 		}
-		result = cur;
-	}
-}
-
-void EditInv(struct node* current) {
-	//_getch();
-	//current->data->DisplayDep();
-	//_getch();
-	ClassMenu* depMenu = new ClassMenu();
-	int resultdepMenu = 1;
-	const int exitdepMenu = 0;
-	ClassEdit* ce = new  ClassEdit();
-	depMenu->addItem("Выход");   //0
-	depMenu->addItem("Добавить/изменить cокращенное обозначение института"); //1
-	depMenu->addItem("Добавить/изменить cокращенное обозначение кафедры");   //2
-	depMenu->addItem("Добавить/изменить должность");   //3
-	depMenu->addItem("Добавить/изменить фамилию и инициалы ответственного лица");   //4
-	depMenu->addItem("Добавить/изменить (просмотреть) имущество");   //5
-	while (resultdepMenu != exitdepMenu) {
-		depMenu->eraseTitle();
-		depMenu->addTitleItem("Изменение/добавление данных имуществе:");
-		depMenu->addTitleItem("Сокращенное обозначение института: " + string(current->data->data->inst));
-		depMenu->addTitleItem("Сокращенное обозначение кафедры: " + string(current->data->data->name));
-		depMenu->addTitleItem("Должность: " + string(current->data->data->position)) ;
-		depMenu->addTitleItem("Фамилия и инициалы ответственного лица: " + string(current->data->data->resp_person));
-		depMenu->run();
-		resultdepMenu = depMenu->getSelectedItem();
-		string tmpString = "";
-		int year = 0;
-		int startYear = 0;
-		switch (resultdepMenu) {
-		case 0:
-			resultdepMenu = exitdepMenu;
-			break;
-		case 1:
-			ce->setLabel("Введите cокращенное обозначение института. ");
-			current->data->data->inst=ce->setDataString(current->data->data->inst);
-			break;
-		case 2:
-			ce->setLabel("Введите cокращенное обозначение кафедры. ");
-			current->data->data->name = ce->setDataString(current->data->data->name);
-			break;
-		case 3:
-			ce->setLabel("Введите должность. ");
-			current->data->data->position = ce->setDataString(current->data->data->position);
-			break;
-		case 4:
-			ce->setLabel("Введите фамилию и инициалы ответственного лица. ");
-			current->data->data->resp_person = ce->setDataString(current->data->data->resp_person);
-			break;
-		case 5:
-			ce->setLabel("Просмотреть/ изменить имущество");
-			editItems(current);
-			break;
-		default:
-			break;
+		if (resultItsSelectedItem > 1)
+		{
+			int num = resultItsSelectedItem - 2;
+			//itemEdit(depList, num);
 		}
 	}
-}
 
-void addInv(DepartamentList* depList) {
-	class Departament* data = new Departament();
-	data->setDefaultDep();
-	depList->addItem(data);
-	struct node* current = depList->myHead;
-	EditInv(current);
-}
+
+};
 
 void  depEdit(DepartamentList* depList, int num) {
 	ClassMenu* depMenu = new ClassMenu();  // Меню редактирования данных о подразделении
-	int countItem = 0;
 	int resultDpsSelectedItem = 1;
-	const int exitInt = 0;
+	const int exitInt = 4;
 	depMenu->addTitleItem("Редактирования данных о подразделении:");
 	ClassEdit* ce = new  ClassEdit();
-
 	struct node* current = depList->getItem(num);
 	while (resultDpsSelectedItem != exitInt)
 	{
@@ -161,22 +77,55 @@ void  depEdit(DepartamentList* depList, int num) {
 		depMenu->addTitleItem(" Сокращенное обозначение кафедры: " + current->data->data->name);
 		depMenu->addTitleItem(" Должность:" + current->data->data->position);
 		depMenu->addTitleItem(" Фамилия и инициалы ответственного лица: " + current->data->data->resp_person);
-
-		depMenu->addItem("Выход");
+		depMenu->addItem("Изменить Сокращенное обозначение института"); //0
+		depMenu->addItem("Изменить Сокращенное обозначение кафедры");//1
+		depMenu->addItem("Изменить Должность");//2
+		depMenu->addItem("Изменить Фамилия и инициалы ответственного лица");//3
+		depMenu->addItem("Просмотреть/изменить имущество");//4
+		depMenu->addItem("Выход");//5
 		depMenu->run();
 		resultDpsSelectedItem = depMenu->getSelectedItem();
 		switch (resultDpsSelectedItem)
 		{
 		case 0:
-			resultDpsSelectedItem = 0;
-			//resultSelectedItem = exitInt;
+			ce->setLabel("Изменить Сокращенное обозначение института " );
+			current->data->data->inst = ce->setDataString(current->data->data->inst);
 			break;
-
+		case 1:
+			ce->setLabel("Изменить Сокращенное обозначение кафедры " );
+			current->data->data->name = ce->setDataString(current->data->data->name);
+			break;
+		case 2:
+			ce->setLabel("Изменить Должность ");
+			current->data->data->position = ce->setDataString(current->data->data->position);
+			break;
+		case 3:
+			ce->setLabel("Изменить Фамилия и инициалы ответственного лица ");
+			current->data->data->resp_person = ce->setDataString(current->data->data->resp_person);
+			break;
+		case 4:
+			editItems(current);
+			break;
 		default:
 			break;
 		}
 	}
 }
+
+void  departamentsAdd(DepartamentList* depList) {
+	class Departament* dp = new Departament();
+	dp->setDefaultDep();
+	dp->data->resp_person = "Сорокина П.А.";
+	dp->data->name = "КБ-9";
+	struct Item* item = new Item();
+	item->title = "ЛОМ";
+	item->inventory_number = "434006916";
+	item->commissioning_date.setDate(28, 05, 2025);
+	item->service_life = 24;
+	dp->data->items.push_back(*item);
+	depList->addItem(dp);
+	depEdit(depList, depList->countItem-1);
+};
 
 void  departamentsEdit(DepartamentList* depList) {
 	ClassMenu* departamentsMenu = new ClassMenu();  // Меню подразделений
@@ -257,10 +206,9 @@ void mainMenu(DepartamentList* depList) {
 		case 0:
 			departamentsEdit(depList);
 			resultSelectedItem = 0;
-			//resultSelectedItem = exitInt;
 			break;
-		case 1: //Добавить данные о имущества
-			addInv(depList);
+		case 1: //Добавить данные о подразделении
+			departamentsAdd(depList);
 			resultSelectedItem = 0;
 			break;
 		case 2: //Загрузить БД из файла  
