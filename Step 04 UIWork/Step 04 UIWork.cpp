@@ -10,6 +10,84 @@
 #include "..//Step 06 CryptoWork/ClassCrypt.h"
 //#include "..//Step 01 StructWork/Date.h"
 
+void  itemEdit(struct node* current, int num) {  //TODO дописать
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	ClassMenu* itemMenu = new ClassMenu();  // Меню редактирования данных о подразделении
+	int resultDpsSelectedItem = 1;
+	const int exitInt = 4;
+	itemMenu->addTitleItem("Редактирования данных о имуществе:");
+	ClassEdit* ce = new  ClassEdit();
+	while (resultDpsSelectedItem != exitInt)
+	{
+		itemMenu->eraseAll();
+		itemMenu->addTitleItem("Редактирования данных о имуществе: ");
+		itemMenu->addTitleItem(" Сокращенное обозначение института: " + current->data->data->inst);
+		itemMenu->addTitleItem(" Сокращенное обозначение кафедры: " + current->data->data->name);
+		itemMenu->addTitleItem(" Должность:" + current->data->data->position);
+		itemMenu->addTitleItem(" Фамилия и инициалы ответственного лица: " + current->data->data->resp_person);
+		itemMenu->addItem("Изменить Сокращенное обозначение института"); //0
+		itemMenu->addItem("Изменить Сокращенное обозначение кафедры");//1
+		itemMenu->addItem("Изменить Должность");//2
+		itemMenu->addItem("Изменить Фамилия и инициалы ответственного лица");//3
+		itemMenu->addItem("Просмотреть/изменить имущество");//4
+		itemMenu->addItem("Выход");//5
+		itemMenu->run();
+		resultDpsSelectedItem = itemMenu->getSelectedItem();
+		switch (resultDpsSelectedItem)
+		{
+		case 0:
+			ce->setLabel("Изменить Сокращенное обозначение института ");
+			current->data->data->inst = ce->setDataString(current->data->data->inst);
+			break;
+		case 1:
+			ce->setLabel("Изменить Сокращенное обозначение кафедры ");
+			current->data->data->name = ce->setDataString(current->data->data->name);
+			break;
+		case 2:
+			ce->setLabel("Изменить Должность ");
+			current->data->data->position = ce->setDataString(current->data->data->position);
+			break;
+		case 3:
+			ce->setLabel("Изменить Фамилия и инициалы ответственного лица ");
+			current->data->data->resp_person = ce->setDataString(current->data->data->resp_person);
+			break;
+		case 4:
+			editItems(current);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 
 void editItems(struct node* current) {
 	ClassMenu* itemsMenu = new ClassMenu();  // Меню подразделений
@@ -55,7 +133,7 @@ void editItems(struct node* current) {
 		if (resultItsSelectedItem > 1)
 		{
 			int num = resultItsSelectedItem - 2;
-			//itemEdit(depList, num);
+			itemEdit(current, num);
 		}
 	}
 
