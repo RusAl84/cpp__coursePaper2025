@@ -99,7 +99,7 @@ void editItems(struct node* current) {
 				}
 				else {
 					int num = resultDel - 1;
-					//depList->deleteItem(num);
+					//deleteItem(num);
 					auto iter = current->data->data->items.cbegin();  // указатель на первый элемент
 					current->data->data->items.erase(iter + num);  // удаляем  элемент
 					break;
