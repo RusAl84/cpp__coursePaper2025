@@ -399,10 +399,11 @@ void mainMenu(DepartamentList* depList) {
 			fWork->saveData(depList->myHead);
 			fWork->filename = old_filename;
 			old_filename = buffer;
-			old_filename +=  '\\'+ filename;
+			old_filename +=  '\\';
 			cout << old_filename;
-			pCrypt->db_filename = old_filename;
-			pCrypt->secure_db_filename = "secure_dataText.txt";
+			pCrypt->db_filename = old_filename + filename;
+
+			pCrypt->secure_db_filename = old_filename+"secure_dataText.txt";
 			pCrypt->Crypt();
 			_getch();
 			resultSelectedItem = 0;
