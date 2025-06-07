@@ -263,20 +263,36 @@ void var29_1(DepartamentList* depList) {
 	struct node* current = depList->myHead;
 	while (current) {
 		if (current->data->data->resp_person == found_resp_person) {
-
+			current->data->DisplayDep();
+			break;
 		};
 		current = current->next;
+	}
+	if (current == NULL) {
+		system("cls");
+		cout << "Имущество за сотрудником " + found_resp_person + " не числится";
 	}
 	_getch();
 };
 
 void var29_2(DepartamentList* depList) {
-	//2) список имущества, подлежащего списанию в ближайшие 3 - 4 месяца
+	system("cls");
+	cout << "2) список имущества, подлежащего списанию в ближайшие 3 - 4 месяца" << endl;
+	ClassEdit* ce = new  ClassEdit();
+	ce->setLabel("Введите дату для выполнения задания ");
+	ce->setLabel("Введите день: ");
+	int day = ce->setDataInt(1, 31, 07);
+	ce->setLabel("Введите месяц: ");
+	int month = ce->setDataInt(1, 12, 06);;
+	ce->setLabel("Введите год: ");
+	int year= ce->setDataInt(1960, 2080, 2025);;
+	_getch();
 
 };
 
 void var29_3(DepartamentList* depList) {
-	//3) количество некоторого имущества(например, стульев), закрепленных за кафедрой.
+	system("cls");
+	cout << "3) количество некоторого имущества(например, стульев), закрепленных за кафедрой" << endl;
 };
 
 void mainMenu(DepartamentList* depList) {
@@ -336,10 +352,12 @@ void mainMenu(DepartamentList* depList) {
 			resultSelectedItem = 0;
 			break;
 		case 7: //Выполнить вариант 29 часть 2
+			var29_2(depList);
 			_getch();
 			resultSelectedItem = 0;
 			break;
 		case 8: //Выполнить вариант 29 часть 3
+			var29_3(depList);
 			_getch();
 			resultSelectedItem = 0;
 			break;
