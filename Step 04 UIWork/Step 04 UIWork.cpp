@@ -9,6 +9,7 @@
 #include "..//UI ClassMenu/ClassMenu.h"
 #include "..//Step 06 CryptoWork/ClassCrypt.h"
 //#include "..//Step 01 StructWork/Date.h"
+#include <direct.h>  
 
 
 
@@ -282,12 +283,12 @@ void var29_2(DepartamentList* depList) {
 	int day = 1;
 	int month = 9;
 	int year = 2028;
-	//ce->setLabel("Введите день: ");
-	//day = ce->setDataInt(1, 31, day);
-	//ce->setLabel("Введите месяц: ");
-	//month = ce->setDataInt(1, 12, month);;
-	//ce->setLabel("Введите год: ");
-	//year= ce->setDataInt(1960, 2080, year);;
+	ce->setLabel("Введите день: ");
+	day = ce->setDataInt(1, 31, day);
+	ce->setLabel("Введите месяц: ");
+	month = ce->setDataInt(1, 12, month);
+	ce->setLabel("Введите год: ");
+	year= ce->setDataInt(1960, 2080, year);
 	struct node* current = depList->myHead;
 	system("cls");
 	cout << "2) список имущества, подлежащего списанию в ближайшие 3 - 4 месяца" << endl;
@@ -308,10 +309,7 @@ void var29_2(DepartamentList* depList) {
 		}
 		current = current->next;
 	}
-
-
 	_getch();
-
 };
 
 void var29_3(DepartamentList* depList) {
@@ -323,6 +321,8 @@ void var29_3(DepartamentList* depList) {
 	ce->setLabel("Наименование имущества: ");
 	string found_item_name = ce->setDataString("Дрель");
 	struct node* current = depList->myHead;
+	system("cls");
+	cout << "Задание №3 количество некоторого имущества(например, стульев), закрепленных за кафедрой" << endl;
 	cout << endl<<"Сокращенное обозначение кафедры: " + found_dep_name + " Наименование имущества: " + found_item_name;
 	while (current) {
 		if (current->data->data->name == found_dep_name) {
@@ -330,7 +330,7 @@ void var29_3(DepartamentList* depList) {
 			for (int i = 0; i < current->data->data->items.size(); i++) {
 				if (found_item_name == current->data->data->items[i].title) {
 					cout << endl << "Наименование " << current->data->data->items[i].title;
-					cout << endl << "Инвентарный номер: " << current->data->data->items[i].inventory_number;
+					cout << " инв. номер: " << current->data->data->items[i].inventory_number;
 				}
 			}
 			break;
@@ -361,6 +361,10 @@ void mainMenu(DepartamentList* depList) {
 	int exitInt = 9;
 	class FileWork* fWork = new FileWork();
 	ClassCrypt* pCrypt = new ClassCrypt();
+	const size_t size = 1024;
+	char buffer[size];
+	string filename="";
+	string old_filename= fWork->filename;
 	while (resultSelectedItem != exitInt)
 	{
 		mainMenu->run();
@@ -385,15 +389,37 @@ void mainMenu(DepartamentList* depList) {
 			resultSelectedItem = 0;
 			break;
 		case 4: //Зашифровать БД
-			pCrypt->db_filename = fWork->filename;
+			if (_getcwd(buffer, size) != NULL) {
+				cout << "Current working directory: " << buffer << endl;
+				//_getch();
+			}
+			filename = fWork->filename;
+			filename.erase(0, 4);
+			fWork->filename = filename;
+			fWork->saveData(depList->myHead);
+			fWork->filename = old_filename;
+			old_filename = buffer;
+			old_filename +=  '\\'+ filename;
+			cout << old_filename;
+			pCrypt->db_filename = old_filename;
 			pCrypt->secure_db_filename = "secure_dataText.txt";
 			pCrypt->Crypt();
+			_getch();
 			resultSelectedItem = 0;
 			break;
 		case 5: //Расшифровать БД
-			pCrypt->db_filename = fWork->filename;
-			pCrypt->secure_db_filename = "secure_dataText.txt";
+			if (_getcwd(buffer, size) != NULL) {
+				cout << "Current working directory: " << buffer << endl;
+				//_getch();
+			}
+			filename = fWork->filename;
+			filename.erase(0, 4);
+			old_filename = buffer;
+			old_filename += '\\';
+			pCrypt->db_filename = old_filename+"de_secure_dataText.txt";
+			pCrypt->secure_db_filename = old_filename + "secure_dataText.txt";;
 			pCrypt->Decrypt();
+			_getch();
 			resultSelectedItem = 0;
 			break;
 		case 6: //Выполнить вариант 29 часть 1
