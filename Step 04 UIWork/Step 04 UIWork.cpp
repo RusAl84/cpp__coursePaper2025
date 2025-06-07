@@ -256,7 +256,7 @@ void  departamentsEdit(DepartamentList* depList) {
 
 void var29_1(DepartamentList* depList) {
 	system("cls");
-	cout << "1) список имущества кафедры, закрепленного за определенным сотрудником"<< endl;
+	cout << "Задание №1 список имущества кафедры, закрепленного за определенным сотрудником"<< endl;
 	ClassEdit* ce = new  ClassEdit();
 	ce->setLabel("Введите Фамилию и инициалы сотрудника для поиска имущества ");
 	string found_resp_person = ce->setDataString("Русаков А.М.");
@@ -277,22 +277,71 @@ void var29_1(DepartamentList* depList) {
 
 void var29_2(DepartamentList* depList) {
 	system("cls");
-	cout << "2) список имущества, подлежащего списанию в ближайшие 3 - 4 месяца" << endl;
+	cout << "Задание №2 список имущества, подлежащего списанию в ближайшие 3 - 4 месяца" << endl;
 	ClassEdit* ce = new  ClassEdit();
-	ce->setLabel("Введите дату для выполнения задания ");
-	ce->setLabel("Введите день: ");
-	int day = ce->setDataInt(1, 31, 07);
-	ce->setLabel("Введите месяц: ");
-	int month = ce->setDataInt(1, 12, 06);;
-	ce->setLabel("Введите год: ");
-	int year= ce->setDataInt(1960, 2080, 2025);;
+	int day = 1;
+	int month = 9;
+	int year = 2028;
+	//ce->setLabel("Введите день: ");
+	//day = ce->setDataInt(1, 31, day);
+	//ce->setLabel("Введите месяц: ");
+	//month = ce->setDataInt(1, 12, month);;
+	//ce->setLabel("Введите год: ");
+	//year= ce->setDataInt(1960, 2080, year);;
+	struct node* current = depList->myHead;
+	system("cls");
+	cout << "2) список имущества, подлежащего списанию в ближайшие 3 - 4 месяца" << endl;
+	cout << "Выбрана дата: " + to_string(day) + "/" + to_string(month) + "/" + to_string(year) << endl;
+	while (current) {
+		for (int i = 0; i < current->data->data->items.size(); i++) {
+			int  difference = current->data->data->items[i].commissioning_date.checkDifference(day, month, year)*( - 1);
+			int sl = current->data->data->items[i].service_life * 30;
+			difference -= sl;
+			//cout << endl << "difference " << difference;
+			if ((difference > 3 * 30) and (difference < 4 * 30)){
+				cout << endl << endl << "Фамилия и инициалы ответственного лица: " + current->data->data->resp_person;
+				cout << endl << "Наименование " << current->data->data->items[i].title;
+				cout << " Срок использования истечет через " + to_string(difference) +" дней";
+				cout << endl << "Дата ввода в эксплуатацию: " << current->data->data->items[i].commissioning_date.getStringDate();
+				cout << endl << "Срок службы: " << current->data->data->items[i].service_life << " месяцев";
+			}
+		}
+		current = current->next;
+	}
+
+
 	_getch();
 
 };
 
 void var29_3(DepartamentList* depList) {
 	system("cls");
-	cout << "3) количество некоторого имущества(например, стульев), закрепленных за кафедрой" << endl;
+	cout << "Задание №3 количество некоторого имущества(например, стульев), закрепленных за кафедрой" << endl;
+	ClassEdit* ce = new  ClassEdit();
+	ce->setLabel("Сокращенное обозначение кафедры: ");
+	string found_dep_name = ce->setDataString("КБ-2");
+	ce->setLabel("Наименование имущества: ");
+	string found_item_name = ce->setDataString("Дрель");
+	struct node* current = depList->myHead;
+	cout << endl<<"Сокращенное обозначение кафедры: " + found_dep_name + " Наименование имущества: " + found_item_name;
+	while (current) {
+		if (current->data->data->name == found_dep_name) {
+			cout << endl << "Список искомого имущества для подразделения " << current->data->data->name;
+			for (int i = 0; i < current->data->data->items.size(); i++) {
+				if (found_item_name == current->data->data->items[i].title) {
+					cout << endl << "Наименование " << current->data->data->items[i].title;
+					cout << endl << "Инвентарный номер: " << current->data->data->items[i].inventory_number;
+				}
+			}
+			break;
+		};
+		current = current->next;
+	}
+	if (current == NULL) {
+		system("cls");
+		cout << "Искомое имущество за кафедрой " + found_dep_name + " не числится";
+	}
+	_getch();
 };
 
 void mainMenu(DepartamentList* depList) {
