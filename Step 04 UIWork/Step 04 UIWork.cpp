@@ -11,18 +11,9 @@
 //#include "..//Step 01 StructWork/Date.h"
 
 
-void  itemAdd(struct node* current) {
 
-	struct Item* item = new Item();
-	item->title = "ЛОМ";
-	item->inventory_number = "434006916";
-	item->commissioning_date.setDate(28, 05, 2025);
-	item->service_life = 24;
-	current->data->data->items.push_back(*item);
-	itemEdit(current, current->data->data->items.size() - 1);
-};
 
-void  itemEdit(struct node* current, int num) {  //TODO дописать
+void  itemEdit(struct node* current, int num) {  
 	ClassMenu* itemMenu = new ClassMenu();  // Меню редактирования данных о подразделении
 	int resultDpsSelectedItem = 1;
 	const int exitInt = 4;
@@ -40,8 +31,7 @@ void  itemEdit(struct node* current, int num) {  //TODO дописать
 		itemMenu->addItem("Изменить Инвентарный номер");//1
 		itemMenu->addItem("Изменить Дата ввода в эксплуатацию");//2
 		itemMenu->addItem("Изменить Cрок службы");//3
-		itemMenu->addItem("Добавить новое имущество");//4
-		itemMenu->addItem("Выход");//5
+		itemMenu->addItem("Выход");//4
 		itemMenu->run();
 		resultDpsSelectedItem = itemMenu->getSelectedItem();
 		switch (resultDpsSelectedItem)
@@ -69,9 +59,6 @@ void  itemEdit(struct node* current, int num) {  //TODO дописать
 			current->data->data->items[num].service_life = ce->setDataInt(1,240, current->data->data->items[num].service_life);
 			break;
 		case 4:
-			itemAdd(current);
-			break;
-		case 5:
 			resultDpsSelectedItem = exitInt;
 			break;
 		default:
@@ -79,6 +66,18 @@ void  itemEdit(struct node* current, int num) {  //TODO дописать
 		}
 	}
 }
+
+void  itemAdd(struct node* current) {
+
+	struct Item* item = new Item();
+	item->title = "ЛОМ";
+	item->inventory_number = "43400692222";
+	item->commissioning_date.setDate(28, 05, 2025);
+	item->service_life = 24;
+	current->data->data->items.push_back(*item);
+	itemEdit(current, current->data->data->items.size() - 1);
+};
+
 
 
 void editItems(struct node* current) {
@@ -94,6 +93,7 @@ void editItems(struct node* current) {
 		itemsMenu->eraseItem();
 		itemsMenu->addItem("Выход");
 		itemsMenu->addItem("Удалить данные имуществе");
+		itemsMenu->addItem("Добавить имущество");
 		for(int i=0; i< current->data->data->items.size();i++)
 			itemsMenu->addItem(current->data->data->items[i].title + "  " + current->data->data->items[i].inventory_number);
 		itemsMenu->run();
@@ -122,9 +122,13 @@ void editItems(struct node* current) {
 				}
 			}
 		}
-		if (resultItsSelectedItem > 1)
+		if (resultItsSelectedItem == 2) //добавление данных
 		{
-			int num = resultItsSelectedItem - 2;
+			itemAdd(current);
+		}
+		if (resultItsSelectedItem > 2) // изменение данных
+		{
+			int num = resultItsSelectedItem - 3;
 			itemEdit(current, num);
 		}
 	}
