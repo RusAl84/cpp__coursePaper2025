@@ -11,38 +11,7 @@
 //#include "..//Step 01 StructWork/Date.h"
 
 void  itemEdit(struct node* current, int num) {  //TODO дописать
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	ClassMenu* itemMenu = new ClassMenu();  // Меню редактирования данных о подразделении
+		ClassMenu* itemMenu = new ClassMenu();  // Меню редактирования данных о подразделении
 	int resultDpsSelectedItem = 1;
 	const int exitInt = 4;
 	itemMenu->addTitleItem("Редактирования данных о имуществе:");
@@ -51,38 +20,43 @@ void  itemEdit(struct node* current, int num) {  //TODO дописать
 	{
 		itemMenu->eraseAll();
 		itemMenu->addTitleItem("Редактирования данных о имуществе: ");
-		itemMenu->addTitleItem(" Сокращенное обозначение института: " + current->data->data->inst);
-		itemMenu->addTitleItem(" Сокращенное обозначение кафедры: " + current->data->data->name);
-		itemMenu->addTitleItem(" Должность:" + current->data->data->position);
-		itemMenu->addTitleItem(" Фамилия и инициалы ответственного лица: " + current->data->data->resp_person);
-		itemMenu->addItem("Изменить Сокращенное обозначение института"); //0
-		itemMenu->addItem("Изменить Сокращенное обозначение кафедры");//1
-		itemMenu->addItem("Изменить Должность");//2
-		itemMenu->addItem("Изменить Фамилия и инициалы ответственного лица");//3
-		itemMenu->addItem("Просмотреть/изменить имущество");//4
-		itemMenu->addItem("Выход");//5
+		itemMenu->addTitleItem(" Наименование имущества: " + current->data->data->items[num].title);
+		itemMenu->addTitleItem(" Инвентарный номер: " + current->data->data->items[num].inventory_number);
+		itemMenu->addTitleItem(" Дата ввода в эксплуатацию:" + current->data->data->items[num].commissioning_date.getStringDate());
+		itemMenu->addTitleItem(" Cрок службы: " + to_string(current->data->data->items[num].service_life));
+		itemMenu->addItem("Изменить Наименование имущества"); //0
+		itemMenu->addItem("Изменить Инвентарный номер");//1
+		itemMenu->addItem("Изменить Дата ввода в эксплуатацию");//2
+		itemMenu->addItem("Изменить Cрок службы");//3
+		itemMenu->addItem("Выход");//4
 		itemMenu->run();
 		resultDpsSelectedItem = itemMenu->getSelectedItem();
 		switch (resultDpsSelectedItem)
 		{
 		case 0:
-			ce->setLabel("Изменить Сокращенное обозначение института ");
-			current->data->data->inst = ce->setDataString(current->data->data->inst);
+			ce->setLabel("Изменить Наименование имущества ");
+			current->data->data->items[num].title = ce->setDataString(current->data->data->items[num].title);
 			break;
 		case 1:
-			ce->setLabel("Изменить Сокращенное обозначение кафедры ");
-			current->data->data->name = ce->setDataString(current->data->data->name);
+			ce->setLabel("Изменить Инвентарный номер ");
+			current->data->data->items[num].inventory_number = ce->setDataString(current->data->data->items[num].inventory_number);
 			break;
 		case 2:
-			ce->setLabel("Изменить Должность ");
-			current->data->data->position = ce->setDataString(current->data->data->position);
+			ce->setLabel("Изменить Дата ввода в эксплуатацию ");
+			ce->setLabel("Введите день введения в в эксплуатацию: ");
+			current->data->data->items[num].commissioning_date.day = ce->setDataInt(1, 31, current->data->data->items[num].commissioning_date.day);
+			ce->setLabel("Введите месяц введения в в эксплуатацию:  ");
+			current->data->data->items[num].commissioning_date.month = ce->setDataInt(1, 12, current->data->data->items[num].commissioning_date.month);;
+			ce->setLabel("Введите год введения в в эксплуатацию: ");
+			current->data->data->items[num].commissioning_date.year = ce->setDataInt(1960, 2050, current->data->data->items[num].commissioning_date.year);
 			break;
 		case 3:
-			ce->setLabel("Изменить Фамилия и инициалы ответственного лица ");
-			current->data->data->resp_person = ce->setDataString(current->data->data->resp_person);
+			ce->setLabel("Изменить Cрок службы ");
+			//int startRange, int endRange, int dataInt
+			current->data->data->items[num].service_life = ce->setDataInt(1,240, current->data->data->items[num].service_life);
 			break;
 		case 4:
-			editItems(current);
+			resultDpsSelectedItem = exitInt;
 			break;
 		default:
 			break;
