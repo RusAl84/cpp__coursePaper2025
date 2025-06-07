@@ -10,8 +10,20 @@
 #include "..//Step 06 CryptoWork/ClassCrypt.h"
 //#include "..//Step 01 StructWork/Date.h"
 
+
+void  itemAdd(struct node* current) {
+
+	struct Item* item = new Item();
+	item->title = "ЛОМ";
+	item->inventory_number = "434006916";
+	item->commissioning_date.setDate(28, 05, 2025);
+	item->service_life = 24;
+	current->data->data->items.push_back(*item);
+	itemEdit(current, current->data->data->items.size() - 1);
+};
+
 void  itemEdit(struct node* current, int num) {  //TODO дописать
-		ClassMenu* itemMenu = new ClassMenu();  // Меню редактирования данных о подразделении
+	ClassMenu* itemMenu = new ClassMenu();  // Меню редактирования данных о подразделении
 	int resultDpsSelectedItem = 1;
 	const int exitInt = 4;
 	itemMenu->addTitleItem("Редактирования данных о имуществе:");
@@ -28,7 +40,8 @@ void  itemEdit(struct node* current, int num) {  //TODO дописать
 		itemMenu->addItem("Изменить Инвентарный номер");//1
 		itemMenu->addItem("Изменить Дата ввода в эксплуатацию");//2
 		itemMenu->addItem("Изменить Cрок службы");//3
-		itemMenu->addItem("Выход");//4
+		itemMenu->addItem("Добавить новое имущество");//4
+		itemMenu->addItem("Выход");//5
 		itemMenu->run();
 		resultDpsSelectedItem = itemMenu->getSelectedItem();
 		switch (resultDpsSelectedItem)
@@ -56,6 +69,9 @@ void  itemEdit(struct node* current, int num) {  //TODO дописать
 			current->data->data->items[num].service_life = ce->setDataInt(1,240, current->data->data->items[num].service_life);
 			break;
 		case 4:
+			itemAdd(current);
+			break;
+		case 5:
 			resultDpsSelectedItem = exitInt;
 			break;
 		default:
@@ -234,6 +250,31 @@ void  departamentsEdit(DepartamentList* depList) {
 	}
 };
 
+void var29_1(DepartamentList* depList) {
+	system("cls");
+	cout << "1) список имущества кафедры, закрепленного за определенным сотрудником"<< endl;
+	ClassEdit* ce = new  ClassEdit();
+	ce->setLabel("Введите Фамилию и инициалы сотрудника для поиска имущества ");
+	string found_resp_person = ce->setDataString("Русаков А.М.");
+	struct node* current = depList->myHead;
+	while (current) {
+		if (current->data->data->resp_person == found_resp_person) {
+
+		};
+		current = current->next;
+	}
+	_getch();
+};
+
+void var29_2(DepartamentList* depList) {
+	//2) список имущества, подлежащего списанию в ближайшие 3 - 4 месяца
+
+};
+
+void var29_3(DepartamentList* depList) {
+	//3) количество некоторого имущества(например, стульев), закрепленных за кафедрой.
+};
+
 void mainMenu(DepartamentList* depList) {
 	ClassMenu* mainMenu = new ClassMenu();
 	mainMenu->addTitleItem("Главное меню");
@@ -287,7 +328,7 @@ void mainMenu(DepartamentList* depList) {
 			resultSelectedItem = 0;
 			break;
 		case 6: //Выполнить вариант 29 часть 1
-			_getch();
+			var29_1(depList);
 			resultSelectedItem = 0;
 			break;
 		case 7: //Выполнить вариант 29 часть 2
