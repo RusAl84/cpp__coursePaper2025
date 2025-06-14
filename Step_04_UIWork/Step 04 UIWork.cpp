@@ -140,7 +140,7 @@ void editItems(struct node* current) {
 void  depEdit(DepartamentList* depList, int num) {
 	ClassMenu* depMenu = new ClassMenu();  // Меню редактирования данных о подразделении
 	int resultDpsSelectedItem = 1;
-	const int exitInt = 4;
+	const int exitInt = 5;
 	depMenu->addTitleItem("Редактирования данных о подразделении:");
 	ClassEdit* ce = new  ClassEdit();
 	struct node* current = depList->getItem(num);
@@ -180,6 +180,9 @@ void  depEdit(DepartamentList* depList, int num) {
 			break;
 		case 4:
 			editItems(current);
+			break;
+		case 5:
+			resultDpsSelectedItem = exitInt;
 			break;
 		default:
 			break;
